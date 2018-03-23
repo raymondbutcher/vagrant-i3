@@ -11,16 +11,22 @@ vagrant up
 
 ## Todo
 
-* ssh agent
-* git repos (not all checked out, but easy to check out)
-* work vpn
+* shared secret files
+    * keybase?
+    * ssh keys
+    * vpn config
+    * aws credentials
+    * chrome browser profiles
+    * vs code user settings
+* git repos
+    * don't clone them automatically
+    * add tool for cloning them easily
+* openvpn
 * work tools
-* pip
-* docker
-* aws credentials
-* aws cli
-* terraform version manager
-* packer version manager
+    * custom work tools
+    * pip
+    * docker
+    * aws cli
+    * terraform version manager
+    * packer version manager
 * mac touchpad horizontal scrolling not working in vs code
-* vs code user settings
-* chrome browser profiles

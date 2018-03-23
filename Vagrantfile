@@ -17,6 +17,8 @@ Vagrant.configure("2") do |config|
     config.vm.box_version = "0.0.1"
     config.vm.box_check_update = false
 
+    config.vm.provision "file", source: "~/dotfiles", destination: "/tmp/dotfiles"
+    config.vm.provision "file", source: "~/dotfiles-secret", destination: "/tmp/dotfiles-secret"
     config.vm.provision "file", source: "./config", destination: "/tmp/config"
     config.vm.provision "shell", privileged: false, inline: "cd /tmp/config && bash provision.sh"
 

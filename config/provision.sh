@@ -2,7 +2,7 @@
 set -e
 
 # Install simple packages
-packages="htop iotop jq lsof NetworkManager-openvpn-gnome mtr socat tcpdump telnet tig traceroute unzip zip"
+packages="gnome-keyring htop iotop jq lsof mtr socat tcpdump telnet tig traceroute unzip zip"
 to_install=""
 for package in $packages; do
     rpm -q $package > /dev/null || {
@@ -36,13 +36,19 @@ rpm -q google-chrome-stable > /dev/null || {
     sudo yum install -y https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
 }
 
+# Dotfiles
+make work --no-print-directory --directory=/tmp/dotfiles
+
 # Copy config files
 echo "Copying configs"
-rsync -ru ./i3 ~/.config/
 sudo rsync -ru ./lightdm /etc/
 rsync -ru ./lilyterm ~/.config/
-rsync -ru ./ssh/ ~/.ssh/
+cp .bashrc ~/
 cp .Xresources ~/
+
+if test -e .ssh ; then
+    rsync -ru ./ssh/ ~/.ssh/
+fi
 
 # Remove boot screen options to make it boot faster
 grep GRUB_TIMEOUT=0 /etc/default/grub > /dev/null || {
