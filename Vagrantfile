@@ -1,7 +1,10 @@
 Vagrant.configure("2") do |config|
 
+    config.vm.box = "bento/ubuntu-16.04"
+    config.vm.box_check_update = false
+
     config.vm.provider "virtualbox" do |vb|
-        vb.name = "CentOS"
+        vb.name = "Workstation"
         vb.cpus = 1
         vb.gui = true
         vb.memory = "4096"
@@ -13,13 +16,18 @@ Vagrant.configure("2") do |config|
         vb.customize ['setextradata', :id, 'GUI/HiDPI/UnscaledOutput', '1']
     end
 
-    config.vm.box = "JLofgren/centos7-i3wm"
-    config.vm.box_version = "0.0.1"
-    config.vm.box_check_update = false
+    config.vbguest.auto_update = false
 
-    config.vm.provision "file", source: "~/dotfiles", destination: "/tmp/dotfiles"
-    config.vm.provision "file", source: "~/dotfiles-secret", destination: "/tmp/dotfiles-secret"
-    config.vm.provision "file", source: "./config", destination: "/tmp/config"
-    config.vm.provision "shell", privileged: false, inline: "cd /tmp/config && bash provision.sh"
+    copy_dirs = {
+        "~/dotfiles"        => "~/dotfiles",
+        "~/dotfiles-secret" => "~/dotfiles-secret",
+        "./provision"       => "~/provision",
+    }
+    copy_dirs.each do |src, dest|
+        config.vm.provision "shell", privileged: false, inline: "rm -rf /tmp/copydir"
+        config.vm.provision "file", source: src, destination: "/tmp/copydir"
+        config.vm.provision "shell", privileged: false, inline: "rm -rf #{dest} && mv /tmp/copydir #{dest}"
+    end
+    config.vm.provision "shell", privileged: false, inline: "cd provision && bash provision.sh"
 
 end
