@@ -30,10 +30,9 @@ i3
 libgtk2.0-0
 fonts-font-awesome
 lightdm
+linux-headers-$(uname -r)
 python3-pip
 rxvt-unicode
-virtualbox-guest-dkms
-virtualbox-guest-x11
 xorg
 "
 apt_remove="
@@ -59,3 +58,24 @@ sudo systemctl start lightdm
 # Install dotfiles
 make vagrant-i3 --no-print-directory --directory=~/dotfiles
 make vagrant-i3 --no-print-directory --directory=~/dotfiles-secret
+
+# Virtualbox Guest Additions
+if ! modinfo vboxsf | grep 5.2.8 > /dev/null ; then
+    if ! test -e /tmp/VBoxGuestAdditions_5.2.8.iso ; then
+        wget -nv -P /tmp https://download.virtualbox.org/virtualbox/5.2.8/VBoxGuestAdditions_5.2.8.iso
+    fi
+    sudo mkdir -p /mnt/vbguest
+    if ! mount | grep /mnt/vbguest > /dev/null ; then
+        sudo mount /tmp/VBoxGuestAdditions_5.2.8.iso /mnt/vbguest
+    fi
+    sudo /mnt/vbguest/VBoxLinuxAdditions.run || true
+    if ! modinfo vboxsf | grep 5.2.8 > /dev/null ; then
+        echo "VBoxLinuxAdditions.run failed"
+        exit 1
+    fi
+    find /run/user/$(id -u) -wholename '*/i3/ipc-socket.*' -exec i3-msg -s {} exec sudo VBoxClient-all \;
+    sudo umount /mnt/vbguest
+    rm /tmp/VBoxGuestAdditions_5.2.8.iso
+fi
+
+echo "All done!"
