@@ -50,12 +50,19 @@ i3ipc
 sudo -H pip3 install --upgrade pip
 sudo -H pip3 install $pip3_install
 
+# Direnv
+if ! test -e /usr/bin/direnv ; then
+    sudo wget -nv https://github.com/direnv/direnv/releases/download/v2.15.2/direnv.linux-amd64 -O /usr/bin/direnv
+    sudo chmod a+x /usr/bin/direnv
+fi
+
 # Log in automatically
 sudo rsync -ru ./lightdm /etc/
 sudo systemctl enable lightdm
 sudo systemctl start lightdm
 
 # Install dotfiles
+sudo rsync -ru ./profile.d /etc/
 make vagrant-i3 --no-print-directory --directory=~/dotfiles
 make vagrant-i3 --no-print-directory --directory=~/dotfiles-secret
 
