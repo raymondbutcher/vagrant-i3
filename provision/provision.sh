@@ -31,8 +31,12 @@ libgtk2.0-0
 fonts-font-awesome
 lightdm
 linux-headers-$(uname -r)
+openvpn
+python-pip
 python3-pip
 rxvt-unicode
+tig
+virtualenv
 xorg
 "
 apt_remove="
@@ -42,11 +46,13 @@ sudo apt-get update
 sudo apt-get install -y $apt_install
 sudo apt-get remove -y $apt_remove
 
-# Python 3 packages
+# Python packages
 pip3_install="
+awscli
 fontawesome
 i3ipc
 "
+sudo -H pip2 install --upgrade pip
 sudo -H pip3 install --upgrade pip
 sudo -H pip3 install $pip3_install
 

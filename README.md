@@ -10,21 +10,21 @@ vagrant up
 
 ## Todo
 
-* i3 blocks
 * shared secret files
-    * vpn config
-    * aws credentials
+    * git config with name / email
     * chrome browser profiles
     * vs code user settings
 * git repos
     * don't clone them automatically
     * do add tool for cloning them easily
 * work tools
-    * openvpn
+    * direnv
     * custom work tools
     * pip
     * docker
     * aws cli
     * terraform version manager
     * packer version manager
+* improvements
+    * vpn connection management (use i3 bar?)
 * mac touchpad horizontal scrolling not working in vs code
