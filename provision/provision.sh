@@ -34,8 +34,8 @@ fi
 if ! apt-key fingerprint 7FAC5991 | grep 7FAC5991 > /dev/null ; then
     curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 fi
-if ! test -e /etc/apt/sources.list.d/google.list ; then
-    sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list'
+if ! test -e /etc/apt/sources.list.d/google-chrome.list ; then
+    sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list'
 fi
 
 # System packages
