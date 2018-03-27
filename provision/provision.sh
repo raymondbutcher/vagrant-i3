@@ -10,8 +10,7 @@ if ! dpkg -l sur5r-keyring > /dev/null ; then
     rm ./sur5r-keyring.deb
 fi
 if ! test -e /etc/apt/sources.list.d/sur5r-i3.list ; then
-    source /etc/lsb-release
-    sudo sh -c "echo \"deb http://debian.sur5r.net/i3/ $DISTRIB_CODENAME universe\" > /etc/apt/sources.list.d/sur5r-i3.list"
+    sudo sh -c 'echo "deb http://debian.sur5r.net/i3/ $(lsb_release -cs) universe" > /etc/apt/sources.list.d/sur5r-i3.list'
 fi
 
 # Repo for vscode
@@ -23,9 +22,18 @@ if ! test -e /etc/apt/sources.list.d/vscode.list ; then
     sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
 fi
 
+# Repo for docker
+if ! apt-key fingerprint 0EBFCD88 | grep 0EBFCD88 > /dev/null ; then
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+fi
+if ! test -e /etc/apt/sources.list.d/docker.list ; then
+    sudo sh -c 'echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list'
+fi
+
 # System packages
 apt_install="
 code
+docker-ce
 i3
 libgtk2.0-0
 fonts-font-awesome
