@@ -30,6 +30,14 @@ if ! test -e /etc/apt/sources.list.d/docker.list ; then
     sudo sh -c 'echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list'
 fi
 
+# Repo for google-chrome
+if ! apt-key fingerprint 7FAC5991 | grep 7FAC5991 > /dev/null ; then
+    curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+fi
+if ! test -e /etc/apt/sources.list.d/google.list ; then
+    sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list'
+fi
+
 # System packages
 apt_install="
 code
@@ -37,6 +45,7 @@ docker-ce
 i3
 libgtk2.0-0
 fonts-font-awesome
+google-chrome-stable
 lightdm
 linux-headers-$(uname -r)
 openvpn
