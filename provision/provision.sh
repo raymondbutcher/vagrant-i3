@@ -36,6 +36,7 @@ python-pip
 python3-pip
 rxvt-unicode
 tig
+unzip
 virtualenv
 xorg
 "
@@ -60,6 +61,23 @@ sudo -H pip3 install $pip3_install
 if ! test -e /usr/bin/direnv ; then
     sudo wget -nv https://github.com/direnv/direnv/releases/download/v2.15.2/direnv.linux-amd64 -O /usr/bin/direnv
     sudo chmod a+x /usr/bin/direnv
+fi
+
+# asdf version manager
+if ! test -d ~/.asdf ; then
+    git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.4.3
+fi
+if ! grep asdf.sh ~/.bashrc > /dev/null ; then
+    echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.bashrc
+fi
+if ! grep asdf.bash ~/.bashrc > /dev/null ; then
+    echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> ~/.bashrc
+fi
+if ! test -e ~/.asdf/plugins/packer ; then
+    ~/.asdf/bin/asdf plugin-add packer https://github.com/Banno/asdf-hashicorp.git
+fi
+if ! test -e ~/.asdf/plugins/terraform ; then
+    ~/.asdf/bin/asdf plugin-add terraform https://github.com/Banno/asdf-hashicorp.git
 fi
 
 # Log in automatically

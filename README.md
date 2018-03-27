@@ -14,17 +14,9 @@ vagrant up
     * git config with name / email
     * chrome browser profiles
     * vs code user settings
-* git repos
-    * don't clone them automatically
-    * do add tool for cloning them easily
 * work tools
-    * direnv
-    * custom work tools
-    * pip
     * docker
-    * aws cli
-    * terraform version manager
-    * packer version manager
 * improvements
     * vpn connection management (use i3 bar?)
+    * improve git placeholder so only the config is secret
 * mac touchpad horizontal scrolling not working in vs code
