@@ -16,7 +16,11 @@ Vagrant.configure("2") do |config|
         vb.customize ['setextradata', :id, 'GUI/HiDPI/UnscaledOutput', '1']
     end
 
-    config.vbguest.auto_update = false
+    if defined? VagrantVbguest
+        config.vbguest.auto_update = false
+    end
+
+    config.vm.synced_folder '.', '/vagrant', disabled: true
 
     copy_dirs = {
         "~/dotfiles"        => "~/dotfiles",
