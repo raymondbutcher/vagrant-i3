@@ -40,6 +40,7 @@ fi
 
 # System packages
 apt_install="
+adwaita-icon-theme-full
 code
 docker-ce
 i3
@@ -56,6 +57,7 @@ tig
 unzip
 virtualenv
 xorg
+zip
 "
 apt_remove="
 xterm
@@ -89,6 +91,12 @@ if ! grep asdf.sh ~/.bashrc > /dev/null ; then
 fi
 if ! grep asdf.bash ~/.bashrc > /dev/null ; then
     echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> ~/.bashrc
+fi
+if ! test -e ~/.asdf/plugins/kubectl ; then
+    ~/.asdf/bin/asdf plugin-add kubectl https://github.com/Banno/asdf-kubectl.git
+fi
+if ! test -e ~/.asdf/plugins/kops ; then
+    ~/.asdf/bin/asdf plugin-add kops https://github.com/Antiarchitect/asdf-kops.git
 fi
 if ! test -e ~/.asdf/plugins/packer ; then
     ~/.asdf/bin/asdf plugin-add packer https://github.com/Banno/asdf-hashicorp.git
