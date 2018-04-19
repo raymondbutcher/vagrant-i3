@@ -69,6 +69,7 @@ sudo apt-get remove -y $apt_remove
 # Python packages
 pip3_install="
 awscli
+flake8
 fontawesome
 i3ipc
 "
