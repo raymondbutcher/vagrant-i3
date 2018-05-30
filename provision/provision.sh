@@ -38,21 +38,32 @@ if ! test -e /etc/apt/sources.list.d/google-chrome.list ; then
     sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list'
 fi
 
+# Repo for google-cloud-sdk
+if ! apt-key fingerprint BA07F4FB | grep BA07F4FB > /dev/null ; then
+    curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+fi
+if ! test -e /etc/apt/sources.list.d/google-cloud-sdk.list ; then
+    sudo sh -c 'echo "deb http://packages.cloud.google.com/apt cloud-sdk-$(lsb_release -cs) main" > /etc/apt/sources.list.d/google-cloud-sdk.list'
+fi
+
 # System packages
 apt_install="
 adwaita-icon-theme-full
 code
 docker-ce
-i3
-libgtk2.0-0
 fonts-font-awesome
 google-chrome-stable
+google-cloud-sdk
+i3
+jq
+libgtk2.0-0
 lightdm
 linux-headers-$(uname -r)
 openvpn
 python-pip
 python3-pip
 rxvt-unicode
+sshuttle
 tig
 unzip
 virtualenv
@@ -98,6 +109,9 @@ if ! test -e ~/.asdf/plugins/kubectl ; then
 fi
 if ! test -e ~/.asdf/plugins/kops ; then
     ~/.asdf/bin/asdf plugin-add kops https://github.com/Antiarchitect/asdf-kops.git
+fi
+if ! test -e ~/.asdf/plugins/nodejs ; then
+    ~/.asdf/bin/asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 fi
 if ! test -e ~/.asdf/plugins/packer ; then
     ~/.asdf/bin/asdf plugin-add packer https://github.com/Banno/asdf-hashicorp.git
