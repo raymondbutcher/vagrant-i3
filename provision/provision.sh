@@ -120,6 +120,9 @@ if ! test -e ~/.asdf/plugins/terraform ; then
     ~/.asdf/bin/asdf plugin-add terraform https://github.com/Banno/asdf-hashicorp.git
 fi
 
+# Docker permissions
+sudo usermod -a -G docker $USER
+
 # Log in automatically
 sudo rsync -ru ./lightdm /etc/
 sudo systemctl enable lightdm
